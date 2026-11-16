@@ -1,0 +1,17 @@
+[project]
+name = "chronotope"
+version = "0.1.0"
+description = "Deterministic Paused/Replay/Live harness and Four-Clock evaluator (Gate 1)."
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2",
+    "playwright>=1.62.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+paper-baselines = ["pillow>=10"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

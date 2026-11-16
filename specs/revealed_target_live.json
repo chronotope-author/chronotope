@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "scenario": {
+    "scenario_id": "revealed_target",
+    "scenario_seed": 7,
+    "canvas_w_px": 64,
+    "canvas_h_px": 48,
+    "target_size_px": 6,
+    "event_time_ns": 500000000,
+    "response_window_ns": 400000000,
+    "frame_period_ns": 16666667,
+    "episode_horizon_ns": 2000000000,
+    "irrelevant_motion": false,
+    "skin": "plain"
+  },
+  "task_clock_policy": "live",
+  "replay_source_live_trace_sha256": null,
+  "controller": {
+    "kind": "scripted_oracle",
+    "compute_ns": 250000000,
+    "coordinate_offset_px": 0,
+    "binding": "state_at_B",
+    "expected_observation_delay_ns": null,
+    "expected_delivery_delay_ns": null
+  },
+  "observation": {
+    "boundary_version": 1,
+    "publication_delay_ns": 30000000
+  },
+  "action_space_version": 1,
+  "scorer_version": 1,
+  "timestamp_source": "simulated",
+  "delivery": {
+    "route": "simulated_fixed_delay",
+    "delivery_delay_ns": 20000000,
+    "max_attempts": 1
+  },
+  "exclusion_policy": "report_invalid_separately",
+  "trial_class": "agent_decision"
+}

@@ -1,0 +1,13 @@
+{
+ "kind": "vlm_direct",
+ "server": "anthropic_api",
+ "base_url": "https://api.anthropic.com",
+ "model_id": "claude-fable-5",
+ "prompt_version": 4,
+ "image_scale": 2,
+ "max_tokens": 256,
+ "temperature": 0.0,
+ "enable_thinking": false,
+ "reasoning_effort": "low",
+ "invoke_on": "frame_change"
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "content": [
+      {
+        "text": "You control a desktop by clicking. You are shown one screenshot. At some point a notification card with a blue button appears at an unknown position and expires shortly after. If the card is visible, answer with action \"click\" and the coordinates of the center of its blue button on a 0-1000 grid (x: 0 = left edge, 1000 = right edge; y: 0 = top edge, 1000 = bottom edge). If no card is visible, answer with action \"wait\". Answer with the JSON object only.",
+        "type": "text"
+      }
+    ],
+    "role": "system"
+  },
+  {
+    "content": [
+      {
+        "type": "image"
+      },
+      {
+        "text": "Screenshot attached. Click the target's center or wait.",
+        "type": "text"
+      }
+    ],
+    "role": "user"
+  }
+]

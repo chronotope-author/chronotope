@@ -1,0 +1,130 @@
+Latest-frame updater, Qwen3.5-0.8B comparison
+
+Implementation:
+  src/chronotope/latest_frame.py
+  studies/latest_frame_cuda.cu
+  studies/run_latest_frame_qwen08.py
+  tests/test_latest_frame.py
+
+Current frozen study:
+  runs/latest_frame_qwen08_20261108/experiment
+  Its code/ directory is the immutable execution snapshot.
+  configs/*_agents3_latest_frame.json enables the standalone wrapper.
+  configs/*_agents3_full.json keeps upstream Agent S3 unchanged.
+  configs/*_legacy_cpp_detector.json preserves the accepted legacy arm.
+
+From /home/USER/chronotope, rebuild ONLY the standalone updater:
+  /usr/local/cuda/bin/nvcc -std=c++17 -O3 -arch=sm_121 -shared -Xcompiler=-fPIC \
+    -I runs/notification_qwen08_edgellm0111_20261031/build_source/chronotope/src \
+    studies/latest_frame_cuda.cu \
+    runs/notification_qwen08_edgellm0111_20261031/build_source/chronotope/src/vision.cu \
+    -o /tmp/liblatest_frame.so
+  No Chronotope algorithm or NVIDIA backend source is modified.
+
+Read current progress (does not run an experiment):
+  cat runs/latest_frame_qwen08_20261108/experiment/status.json
+  cat runs/latest_frame_qwen08_20261108/experiment/comparison.md
+
+Recompute scores and reports after the job finishes:
+  /home/USER/agents3-venv/bin/python -B \
+    runs/latest_frame_qwen08_20261108/experiment/code/run_latest_frame_qwen08.py \
+    audit --out runs/latest_frame_qwen08_20261108/experiment
+  During execution the runner updates comparison.md, summary.csv, paired.csv,
+  and per_trial.csv automatically after each terminal trial. Do not run a second
+  report writer against these files while the experiment is writing them.
+
+Reproduction in a NEW empty directory, after this study completes:
+  /home/USER/agents3-venv/bin/python -B studies/run_latest_frame_qwen08.py \
+    prepare --out runs/NEW_UNIQUE_NAME/experiment
+  /home/USER/agents3-venv/bin/python -B studies/run_latest_frame_qwen08.py \
+    validate --out runs/NEW_UNIQUE_NAME/experiment
+  /home/USER/agents3-venv/bin/python -B studies/run_latest_frame_qwen08.py \
+    launch --out runs/NEW_UNIQUE_NAME/experiment
+  Preparation requires the recorded checkpoints, reference artifacts and the
+  existing tokenizer environment. Launch verifies exact model-service process
+  identity and checkpoint/engine hashes. It neither replaces model services nor
+  resumes old studies. The shared GPU lock forbids concurrent evaluations.
+
+Frozen scope:
+  Disappearing Notification, Displaced Button, Reversing Trading Signal.
+  16, 8, 4, 2, 1 seconds; 100 seeds per cell; three controllers; Live only.
+  4,500 planned cases; no qualification or competence gates; no chained jobs.
+  Task/settings are interleaved per seed and controller order rotates.
+  Expiring Authenticator Code remains deferred for its context repair and
+  unsupported native typing. The implemented typing updater is unit-tested
+  only; no new Code success rates are claimed. Moving Balloon is outside this
+  fresh three-task plan, though its drift variant remains an allowed task.
+
+Configuration:
+  Planner: Qwen/Qwen3.5-0.8B revision
+    2fc06364715b967f1860aea9cf38778875588b17.
+  BF16 source, FP16 planner/vision/KV; no weight quantization.
+  Native: pristine TensorRT-Edge-LLM 0.11.1, legacy compact JSON prompt and
+  existing task-color detector, 64-token budget.
+  Both Agent S3 arms: vLLM; unchanged upstream Worker, history (8), reflection,
+  formatting retries and UI-TARS-1.5-7B grounder; optional code agent disabled.
+  UI-TARS revision 683d002dd99d8f95104d31e70391a39348857f4e, BF16 and BF16 KV.
+  Planner budget 4096, temperature 0, top_p .8, repetition penalty 1.0;
+  grounder budget 4096, temperature 0, top_p .8, repetition penalty 1.05.
+  See full_agent_components.json and service_verification.json for all fields.
+
+Updater definition:
+  Preserve the original model action and observation. Immediately before
+  commitment use the newest admitted image and the same native grayscale NCC
+  vision kernels: radius 12, min score .8, ambiguity margin .05, plateau max 4.
+  Retain the original RGB target patch as ordinary pending-action identity.
+  Reject a candidate with RGB mean absolute difference >2/255. A completely
+  unchanged frame preserves the original action, including model errors.
+  Missing, ambiguous or changed-appearance targets yield a scored no-action
+  result, with a recorded reason. No extra model call, restart, operation switch,
+  event ledger, dependency matrix, or selective meta-control is added.
+  The existing fixed-font decoder supports type arguments; it is not exercised
+  in this three-task run. Its font/color prior is explicit, not generic OCR.
+  Python orchestration, pixel staging, template extraction and the RGB check
+  use the CPU. CUDA allocations are prepared before episode start. All per-
+  action copies, kernels and checks are included in measured updater runtime.
+  An AgentState allocation is zeroed scratch required by the existing vision
+  kernel ABI, used for Proposal fields only; no event-history control is linked.
+
+Measurement and interpretation:
+  Native is legacy C++ + detector, NOT full Chronotope. Its prompt and grounding
+  differ from Agent S3, and its color detector receives benchmark target color.
+  The added baseline receives only model output and observation pixels. Only
+  Agent S3 Keep vs Agent S3 latest-frame is a matched-policy updater comparison.
+  Success is recomputed by the unchanged evaluator at benchmark action receipt.
+  Notification setting = lifetime. Button/Trading setting = state-change delay;
+  their independent overall task deadline is 32 seconds.
+  All arms use the same wall-clock advancing environment, 16.666667 ms frame
+  cadence, 30 ms publication delay and 20 ms simulated action-delivery route.
+  Frame publication is lazily caught up after blocking computation. This is
+  not physical asynchronous application capture. The newest frame is sampled
+  once at updater entry; updater runtime is charged, with no repeated update.
+  Scheduled receipt timestamps are distinguished from measured submit/receipt
+  handler timestamps. There are no physical application ACK timestamps.
+  E-to-A p50/p95 are conditional on receipt; no-action latency is missing,
+  never zero. Receipt counts and abstentions accompany the latency summaries.
+  Model-call/token totals include planner, grounding, reflection and retries.
+  HTTP/setup/contract errors are unscored infrastructure records, with logs;
+  remaining independent planned cases continue. No case is automatically retried.
+  Each completed scored case, including competence failures, stays in its cell.
+  Success uncertainty: Wilson 95% intervals. Paired differences use equal seeds
+  AND verified equal first input/image hashes, with deterministic paired
+  bootstrap intervals (2,000 resamples). Small partial samples are inconclusive.
+  A global NCC search may reject an otherwise valid wide/untextured button as
+  ambiguous. Such abstentions are a limitation of this conservative baseline;
+  they are not evidence that an event-history representation is necessary.
+  Expiration/reversal operation-change flags are derived post hoc by the
+  evaluator. No application state or future ground truth reaches the updater.
+
+Artifacts:
+  plan.json: exact cases, seeds, order, action policies and deferred scope.
+  execution_manifest.json: hashes, model precision, source/configuration proof.
+  ../implementation_verification.json: CUDA source/build/test provenance.
+  records/: per-trial scored/infrastructure outcome and request audit.
+  trials/: append-only traces; calls/: full request metadata and token usage.
+  payloads/: content-addressed observation pixels.
+  per_trial.csv: outcomes, timestamps, calls/tokens, updater cost and provenance.
+  summary.csv: all 45 cells, actual denominators, intervals and latency.
+  paired.csv: matching/missing seeds, first-input mismatches and paired deltas.
+  comparison.md: live three-controller table and interpretation limitations.
+  evidence_audit.json: completion audit, written after the final planned case.

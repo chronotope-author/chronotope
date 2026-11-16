@@ -1,0 +1,13 @@
+{
+ "kind": "vlm_direct",
+ "server": "agents3_service",
+ "base_url": "http://127.0.0.1:8100",
+ "model_id": "Qwen3.8-27B+Qwen3.8-27B",
+ "prompt_version": 19,
+ "image_scale": 2,
+ "max_tokens": 64,
+ "temperature": 0.0,
+ "enable_thinking": false,
+ "reasoning_effort": null,
+ "invoke_on": "frame_change"
+}

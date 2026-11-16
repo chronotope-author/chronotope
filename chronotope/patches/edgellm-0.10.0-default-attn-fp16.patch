@@ -1,0 +1,16 @@
+# Local patch (2026-08-27): Edge-LLM 0.10.0's generic LLM path (models/default/modeling_default.py, used for Qwen2.5-VL
+# = UI-TARS-1.5-7B) hands the attention plugin's traced float32 output to o_proj (an FP16Linear), which refuses it
+# ("FP16Linear expects float16 input, got torch.float32"). The Qwen3.5 path casts; this makes the default path do the
+# same. Applied by studies/t1c_uitars.sh with sed; the export is fp16 anyway.
+--- a/tensorrt_edgellm/models/default/modeling_default.py
++++ b/tensorrt_edgellm/models/default/modeling_default.py
+@@
+-        return self.o_proj(attn_output), present_key_value
++        if attn_output.dtype != torch.float16:
++            attn_output = attn_output.to(torch.float16)   # kgua patch: the plugin's traced output is float32 here
++        return self.o_proj(attn_output), present_key_value
+
+# Second part (same day): the Qwen2.5-VL VISUAL encoder hits the same check in its qkv projection
+# (models/qwen2_5_vl/modeling_qwen2_5_vl_visual.py:158). Rather than patch every call site, FP16Linear's guard
+# (models/linear.py _require_fp16_input) now casts to float16 and returns the tensor instead of raising; the one call
+# site assigns its result. Applied by studies/t1d_uitars_visual.sh.

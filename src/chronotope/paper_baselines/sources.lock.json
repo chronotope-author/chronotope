@@ -1,0 +1,32 @@
+{
+  "aoi": {
+    "url": "https://github.com/19PINE-AI/aoi.git",
+    "revision": "5ee56ceee768fe6a3f3cfa9aaab6c81dfa31407d",
+    "files": {
+      "aoi/keyframe_extractor.py": "847462e5e6eab2caf5a937185dbb1767961af055629ca851df89d5fd6a86669e",
+      "aoi/observation_record.py": "68364920041d0c745657fc57b8f11ccb31fef8c4f0f2632aeaed8d6b9db9a519",
+      "aoi/cu_model.py": "a4105fc0df7737e6b3c1520d8e252399ed8c6c40b4cfe676e0789ea07e862769",
+      "LICENSE": "2ae65f6fc4bc79ee6c2f7d2dd203932bee5b5ec6e13034feeb369a6271a5563f"
+    }
+  },
+  "mobiledreamer": {
+    "url": "https://github.com/UITron-hub/MobileDreamer.git",
+    "revision": "473c0bd83a47eeb0a39762942b22ebc9b23d7b73",
+    "files": {
+      "rollout_imagination_for_GUI_agent/world_model_guided/world_model_guided_agent.py": "2b503c5bd063e166707c0fed58621c861c60dd57d271774f9b879e377675209e",
+      "rollout_imagination_for_GUI_agent/world_model_guided/ocr_module.py": "e5411906c1737f17c7026fab597ef9ef199bb7f86ee9999e6696afeb68db56a6",
+      "rollout_imagination_for_GUI_agent/world_model_api/vllm_client.py": "d8a9ecd7a6d2b86fb8588e311fd6be39304b5a4d889f1995008314be04f56cc8"
+    },
+    "checkpoint": {
+      "model": "UITron-hub/MobileDreamer",
+      "revision": "7d229e206cb4dd7aaff4c801174d2292fd545d57",
+      "subfolder": "merge_model",
+      "architecture": "Qwen3ForCausalLM",
+      "license_file_in_release": false
+    }
+  },
+  "aapt": {
+    "paper": "https://arxiv.org/html/2607.28399v1",
+    "implementation": "paper-derived; no upstream code claimed"
+  }
+}

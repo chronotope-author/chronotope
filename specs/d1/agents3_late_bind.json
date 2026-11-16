@@ -1,0 +1,17 @@
+{
+ "kind": "vlm_late_binding",
+ "server": "agents3_service",
+ "base_url": "http://127.0.0.1:8100",
+ "model_id": "AGENTS3_MODEL",
+ "prompt_version": 19,
+ "image_scale": 2,
+ "max_tokens": 64,
+ "temperature": 0.0,
+ "enable_thinking": false,
+ "reasoning_effort": null,
+ "invoke_on": "frame_change",
+ "at_commit_policy": "late_bind",
+ "template_radius_px": 12,
+ "min_match_score": 0.8,
+ "restart_threshold_px": null
+}

@@ -1,0 +1,13 @@
+{
+ "kind": "vlm_direct",
+ "server": "openai_compatible_local",
+ "base_url": "http://127.0.0.1:8000/v1",
+ "model_id": "meituan/EvoCUA-8B-20260105",
+ "prompt_version": 18,
+ "image_scale": 2,
+ "max_tokens": 256,
+ "temperature": 0.0,
+ "enable_thinking": true,
+ "reasoning_effort": null,
+ "invoke_on": "frame_change"
+}

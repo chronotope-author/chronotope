@@ -1,0 +1,19 @@
+diff --git a/cpp/kernels/preprocessKernels/imageUtilKernels.cu b/cpp/kernels/preprocessKernels/imageUtilKernels.cu
+index 8f6c1d8..9f5a44e 100644
+--- a/cpp/kernels/preprocessKernels/imageUtilKernels.cu
++++ b/cpp/kernels/preprocessKernels/imageUtilKernels.cu
+@@ -879,12 +879,12 @@ void copyImageToDeviceAndResize(unsigned char const* rawHostImage, int64_t const
+         unsigned char* dstFrame = dstBase + t * outFrameBytes;
+         if (identity)
+         {
+-            CUDA_CHECK(cudaMemcpyAsync(dstFrame, srcFrame, rawFrameBytes, cudaMemcpyHostToDevice, stream));
++            CUDA_CHECK(cudaMemcpyAsync(dstFrame, srcFrame, rawFrameBytes, cudaMemcpyDefault, stream)); // kgua: source may be a device buffer (UVA infers)
+             continue;
+         }
+         // rawScratch and tmp are reused per frame on the same stream, so the upload-then-resize chain
+         // serializes safely; the 3-D view aliases this frame's slot of the 4-D dst.
+-        CUDA_CHECK(cudaMemcpyAsync(rawScratch.rawPointer(), srcFrame, rawFrameBytes, cudaMemcpyHostToDevice, stream));
++        CUDA_CHECK(cudaMemcpyAsync(rawScratch.rawPointer(), srcFrame, rawFrameBytes, cudaMemcpyDefault, stream)); // kgua: idem
+         rt::Tensor dstView(dstFrame, {outHeight, outWidth, channels}, rt::DeviceType::kGPU, DataType::kUINT8,
+             "kernel::copyImageToDeviceAndResize.dstView");
+         resizeImage(rawScratch, tmp, dstView, outHeight, outWidth, InterpolationMode::kBICUBIC, stream);

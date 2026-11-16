@@ -1,0 +1,17 @@
+{
+ "kind": "vlm_late_binding",
+ "server": "anthropic_api",
+ "base_url": "https://api.anthropic.com",
+ "model_id": "claude-fable-5",
+ "prompt_version": 5,
+ "image_scale": 2,
+ "max_tokens": 256,
+ "temperature": 0.0,
+ "enable_thinking": false,
+ "reasoning_effort": "low",
+ "invoke_on": "frame_change",
+ "at_commit_policy": "late_bind",
+ "template_radius_px": 12,
+ "min_match_score": 0.8,
+ "restart_threshold_px": null
+}
